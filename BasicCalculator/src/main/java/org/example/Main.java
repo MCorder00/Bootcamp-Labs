@@ -59,7 +59,6 @@ public class Main {
                         break;
                     default:
                         System.out.println("Invalid operation.");
-                        isValid = false;
                         break;
                 }
 
@@ -71,14 +70,14 @@ public class Main {
                     isValid = false;
                 } // catch block sends to beginning
             } catch (Exception e) {
-                System.out.println("(Y)es\n(N)o\nInvalid argument. Please try again.");
-                isValid = false;
+                System.out.println("Invalid argument. Please try again.");
             }
-        } while (!isValid);
+        } while (isValid);
     }
 }
 
 /* Pseudocode Design Logic
+@author MDC
 __________________________________
 Tell computer what variables exist
     Variables for:
@@ -110,4 +109,18 @@ Ask user if they want to start over and close While.
     END
  */
 
-// MDC
+/* Version 2 Pseudocode Logic
+    -Introduce more object-oriented programming
+Program Loop at start using methods
+    Call methods and assign variable names
+    (firstNumber, secondNumber, userOperator)
+Create Methods
+    Operand
+    Operator
+    Calculation
+Exception handling within the methods
+Use *** to write on multiple lines at once
+Use .equalsIgnoreCase, get, position
+Use printf (%.2f)
+For division: if secondNumber = 0 then "Cannot divide by zero."
+ */
