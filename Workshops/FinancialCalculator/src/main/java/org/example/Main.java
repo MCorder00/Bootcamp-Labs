@@ -11,9 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
         // declarations in main for handlers
-        char startOver = 'Y';
         boolean shouldContinue = true;
-
         // nested try/catch inside do/while loop to restart program
         do {
             try {
