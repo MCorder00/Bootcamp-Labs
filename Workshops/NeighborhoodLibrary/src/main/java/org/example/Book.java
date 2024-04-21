@@ -1,8 +1,13 @@
 package org.example;
 
+import java.util.Scanner;
 
 public class Book {
     // declare variables
+    static Scanner sc = new Scanner(System.in);
+    static Screen screen = new Screen();
+    static LogicHandler logic = new LogicHandler();
+    static Book book = new Book();
     private int id;
     private String isbn;
     private String title;
@@ -66,41 +71,78 @@ public class Book {
     public void setCheckedOutTo(String checkedOutTo) {
         this.checkedOutTo = checkedOutTo;
     }
-    // check out method
-    public void checkOut(String name){
-        this.isCheckedOut = true;
-        this.checkedOutTo = name;
-    } // check in method
-    public void checkIn(){
-        this.isCheckedOut = false;
-        this.checkedOutTo = "";
+    public void checkOut(Book[] libraryInventory){
+        System.out.println("Please enter your name: ");
+        String name = sc.nextLine();
+        // loop to restart checkout screen
+        while (true) {
+            System.out.println("Please enter the ID of the book you want to check out or enter 0 to exit:");
+            int option = sc.nextInt();
+            sc.nextLine();
+            if (option == 0) {break;
+            }
+            if (option >= 1 && option <= libraryInventory.length && libraryInventory[option].isCheckedOut()){
+                System.out.println("That book is already checked out.");
+            } else if (option >= 1 && option <= libraryInventory.length && !libraryInventory[option].isCheckedOut()) {
+                Book book = libraryInventory[option];
+                book.setCheckedOut(true);
+                book.setCheckedOutTo(name);
+                System.out.println("""
+                           ,   ,
+                          /////|
+                         ///// |
+                        |~~~|  |
+                        |===|  |
+                        |j  |  |
+                        | g |  |
+                        |  s| /
+                        |===|/
+                        '---'""");
+                System.out.println("Thanks, " + name + " you have checked out book: " + book.getTitle() + " ID: " + book.getId());
+            } else {
+                System.out.println("Invalid operation.");
+            }
+        }
     }
-    // establish starting values for inventory
-    public void startLibraryInventory(){
-        libraryInventory[0] = new Book(0,"ISBN","Title", false, "");
-        libraryInventory[1] = new Book(1,"978-0-14-243723-9","A Roadside Picnic", false, "");
-        libraryInventory[2] = new Book(2,"978-0-345-38996-7","The Dispossessed", false, "");
-        libraryInventory[3] = new Book(3,"978-0-553-29388-3","1984", false, "");
-        libraryInventory[4] = new Book(4,"978-0-671-69703-2","Cat's Cradle", false, "");
-        libraryInventory[5] = new Book(5,"978-0-679-73220-5","The Forever War", false, "");
-        libraryInventory[6] = new Book(6,"978-0-316-24662-0","Babel-17", false, "");
-        libraryInventory[7] = new Book(7,"978-0-441-56959-2","Ender's Game", false, "");
-        libraryInventory[8] = new Book(8,"978-0-316-12908-4","The Moon Is A Harsh Mistress", false, "");
-        libraryInventory[9] = new Book(9,"978-0-061-66113-1","Animal Farm", false, "");
-        libraryInventory[10] = new Book(10,"978-0-765-31831-6","The City and The City", false, "");
-        libraryInventory[11] = new Book(11,"978-0-553-28639-4","Fahrenheit 451", false, "");
-        libraryInventory[12] = new Book(12,"978-0-441-79034-5","Consider Phlebas", false, "");
-        libraryInventory[13] = new Book(13,"978-0-804-19677-6","Brave New World", false, "");
-        libraryInventory[14] = new Book(14,"978-0-06-105488-4","Do Androids Dream of Electric Sheep?", false, "");
-        libraryInventory[15] = new Book(15,"978-1-406-51210-9","Foundation", false, "");
-        libraryInventory[16] = new Book(16,"978-0-345-39180-9","Catch-22", false, "");
-        libraryInventory[17] = new Book(17,"978-0-553-27667-1","Slaughterhouse-Five", false, "");
-        libraryInventory[18] = new Book(18,"978-0-060-93001-5","Starship Troopers", false, "");
-        libraryInventory[19] = new Book(19,"978-0-553-34313-6","Neuromancer", false, "");
-        libraryInventory[20] = new Book(20,"978-0-439-02352-8","Dune", false, "");
+    public void checkIn(Book[] libraryInventory) {
+        // loop to restart checkin screen
+        boolean shouldContinue = true;
+        do {
+            try {
+                System.out.println("Please enter the ID of the book you want to check in or enter 0 to exit:");
+                int option = sc.nextInt();
+                if (option == 0) {
+                    return;
+                }
+                sc.nextLine();
+                // if/else to select book
+                if (option >= 1 && option <= libraryInventory.length && !libraryInventory[option].isCheckedOut()) {
+                    System.out.println("Cannot return a book that is not checked out.");
+                } else if (option >= 1 && option <= libraryInventory.length && libraryInventory[option].isCheckedOut()) {
+                    Book book = libraryInventory[option];
+                    book.setCheckedOut(false);
+                    book.setCheckedOutTo("");
+                    System.out.println("""
+                             _   _                 _                     \s
+                            | | | |               | |                    \s
+                            | |_| |__   __ _ _ __ | | ___   _  ___  _   _\s
+                            | __| '_ \\ / _` | '_ \\| |/ / | | |/ _ \\| | | |
+                            | |_| | | | (_| | | | |   <| |_| | (_) | |_| |
+                             \\__|_| |_|\\__,_|_| |_|_|\\_\\\\__, |\\___/ \\__,_|
+                                                         __/ |           \s
+                                                        |___/            \s""");
+                    System.out.println("Thank you for returning the book!");
+                } else {
+                    System.out.println("Invalid operation.");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid operation.");
+                screen.checkContinue();
+            }
+        } while (shouldContinue);
     }
 
-    @Override // override to string method for books
+    @Override // override to string method for books (unused)
     public String toString() {
         return "ID: " + id +
                 ", ISBN: '" + isbn + '\'' +

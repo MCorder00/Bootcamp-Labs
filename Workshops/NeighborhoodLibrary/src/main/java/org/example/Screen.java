@@ -4,109 +4,130 @@ import java.util.Scanner;
 
 public class Screen {
     static Scanner sc = new Scanner(System.in);
-
+    static Screen screen = new Screen();
+    static LogicHandler logic = new LogicHandler();
+    static Book book = new Book();
     public void showHomeScreen() {
+    boolean shouldContinue = true;
+        // nested try/catch inside do/while loop to restart program
+        do {
+            try {
+                //Menu prompts
+                System.out.println("""
+                                     .--.           .---.        .-.
+                                 .---|--|   .-.     | A |  .---. |~|    .--.
+                              .--|===|Ch|---|_|--.__| S |--|:::| |~|-==-|==|---.
+                              |%%|NT2|oc|===| |~~|%%| C |--|   |_|~|CATS|  |___|-.
+                              |  |   |ah|===| |==|  | I |  |:::|=| |    |GB|---|=|
+                              |  |   |ol|   |_|__|  | I |__|   | | |    |  |___| |
+                              |~~|===|--|===|~|~~|%%|~~~|--|:::|=|~|----|==|---|=|
+                              ^--^---'--^---^-^--^--^---'--^---^-^-^-==-^--^---^-'""");
+                System.out.println("YEAR UP PUBLIC LIBRARY");
+                System.out.println("Welcome to the Online Public Access Catalog!");
+                System.out.println("Please select one of the options below.");
+                System.out.println("--------------------------------------");
+                System.out.println("1. View Available Books\n2. View Checked Out Books\n3. Exit");
+                System.out.println("--------------------------------------");
+                System.out.println("Enter your selection (1, 2, or 3) and press <Enter>:");
+                System.out.println("POWERED BY DYNIX | ?=Help (there is none.)");
+                int option = sc.nextInt();
+                // switch to select menu option
+                switch (option) {
+                    case 1:
+                        showAvailableBooks(LogicHandler.libraryInventory);
+                        break;
+                    case 2:
+                        showCheckedOutBooks(LogicHandler.libraryInventory);
+                        break;
+                    case 3:
+                        exitProgram();
+                        break;
+                    default:
+                        System.out.println("Invalid operation.");
+                        break;
+                } // runs exception handler method
+            } catch (Exception e) {
+                System.out.println("Invalid operation.");
+                checkContinue();
+            }
+        } while (shouldContinue);
+    }
 
+    public void showAvailableBooks(Book[] libraryInventory) {
+        boolean shouldContinue = true;
+        // nested try/catch inside do/while loop to restart screen
+        do {
+            try {
+                //Menu prompts
+                System.out.println("List of Available Books");
+                System.out.println("--------------------------------------");
+                System.out.println("ID | Title | ISBN");
+                System.out.println("--------------------------------------");
+                for (Book book : libraryInventory) {
+                    if (!book.isCheckedOut()) {
+                        System.out.println("ID: " +book.getId() + "|" + " Title: " + book.getTitle() + "|" + " ISBN: " + book.getIsbn());
+                    }
+                }
+                System.out.println("(C)heck out a book, or E(X)it to home screen:");
+                char checkChar = sc.next().charAt(0);
+                checkChar = Character.toUpperCase(checkChar);
+                if (checkChar == 'C') {
+                    book.checkOut(LogicHandler.libraryInventory);
+                } else if (checkChar == 'X') {
+                    showHomeScreen();
+                }// runs exception handler method
+            } catch (Exception e) {
+                System.out.println("Invalid operation.");
+                checkContinue();
+            }
+        } while (shouldContinue);
+    }
+
+    public void showCheckedOutBooks(Book[] libraryInventory) {
         boolean shouldContinue = true;
         // nested try/catch inside do/while loop to restart program
         do {
             try {
                 //Menu prompts
-                System.out.println("Welcome to the library!");
+                System.out.println("List of Checked Out Books");
                 System.out.println("--------------------------------------");
-                System.out.println("1. View Available Books\n2. View Checked Out Books\n3. Exit");
+                System.out.println("ID | Title | ISBN | Checked Out To");
                 System.out.println("--------------------------------------");
-                System.out.println("Please enter your desired function (1, 2, or 3):");
-                int option = sc.nextInt();
-                // switch to select menu option
-                switch (option) {
-                    case 1:
-                        showAvailableBooks();
-                        shouldContinue = checkContinue(true);
-                        break;
-                    case 2:
-                        showCheckedOutBooks();
-                        shouldContinue = checkContinue(true);
-                        break;
-                    case 3:
-                        exitProgram();
-                        shouldContinue = checkContinue(true);
-                        break;
-                    default:
-                        System.out.println("Invalid operation.");
-                        break;
-                } // runs exception handler method and updates to false when necessary
+                for (Book book : libraryInventory) {
+                    if (book.isCheckedOut()) {
+                        System.out.println("ID: " + book.getId() + "|" + " Title: " + book.getTitle() + "|" + " ISBN: " + book.getIsbn() + "|" + " Checked Out To: " + book.getCheckedOutTo());
+                    }
+                }
+                System.out.println("(C)heck in a book, or E(X)it to home screen:");
+                char checkChar = sc.next().charAt(0);
+                checkChar = Character.toUpperCase(checkChar);
+                if (checkChar == 'C') {
+                    book.checkIn(LogicHandler.libraryInventory);
+                } else if (checkChar == 'X') {
+                    showHomeScreen();
+                }
+                // runs exception handler method and updates to false when necessary
             } catch (Exception e) {
                 System.out.println("Invalid operation.");
-                shouldContinue = checkContinue(true);
+                checkContinue();
             }
-        } while (shouldContinue); // continue loop if Y, exit text
-        if (!shouldContinue) {
-            System.out.println("Exiting.");
+        } while (shouldContinue);
         }
-    }
-
-    public void showAvailableBooks() {
-        System.out.println("List of Available Books");
-        System.out.println("--------------------------------------");
-        System.out.println("Please enter the ID of the book you want to check out:");
-        int option = sc.nextInt();
-        // switch to select book
-        switch (option) {
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            default:
-                System.out.println("Invalid operation.");
-                break;
-        }
-
-        }
-
-    public void showCheckedOutBooks() {
-        System.out.println("List of Checked Out Books");
-        System.out.println("--------------------------------------");
-        getBook();
-        System.out.println("Please enter the ID of the book you want to return:");
-        int option = sc.nextInt();
-        // switch to select book
-        switch (option) {
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            default:
-                System.out.println("Invalid operation.");
-                break;
-        }
-    }
 
     public void exitProgram() {
-
+        System.out.println("Thank you for using the library!");
+        System.exit(0);
     }
 
-    public static boolean checkContinue (boolean cont){
+    public boolean checkContinue () {
         sc.nextLine();
-        System.out.println("Would you like to start over? (Y)es/(N)o:");
+        System.out.println("Would you like to return to the home screen? (Y)es/(N)o:");
         char checkChar = sc.next().charAt(0);
         checkChar = Character.toUpperCase(checkChar);
         if (checkChar != 'Y') {
-            cont = false;
+            exitProgram();
         }
-        return cont;
+        return false;
     }
 
     }

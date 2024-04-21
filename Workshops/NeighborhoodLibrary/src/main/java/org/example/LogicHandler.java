@@ -1,14 +1,16 @@
 package org.example;
 
-import java.util.Arrays;
 
 public class LogicHandler {
 
     static Book[] libraryInventory = new Book[21];
+    static Book book = new Book();
+    static Screen screen = new Screen();
+    static LogicHandler logic = new LogicHandler();
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         startLibraryInventory();
-        getBook();
+        screen.showHomeScreen();
     }
     public static void startLibraryInventory(){
         libraryInventory[0] = new Book(0,"ISBN","Title", false, "");
@@ -33,9 +35,9 @@ public class LogicHandler {
         libraryInventory[19] = new Book(19,"978-0-553-34313-6","Neuromancer", false, "");
         libraryInventory[20] = new Book(20,"978-0-439-02352-8","Dune", false, "");
     }
-    public static void getBook(){
+    public void getBook(){
         for(int i = 1; i < libraryInventory.length; i++) {
-            System.out.println(libraryInventory[i].toString());
+            System.out.println(libraryInventory[i]);
         }
     }
 
