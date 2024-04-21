@@ -8,7 +8,7 @@ public class LogicHandler {
     static Screen screen = new Screen();
     static LogicHandler logic = new LogicHandler();
 
-    public static void main(String[] args){
+    public void startProgram(){
         startLibraryInventory();
         screen.showHomeScreen();
     }
@@ -34,11 +34,6 @@ public class LogicHandler {
         libraryInventory[18] = new Book(18,"978-0-060-93001-5","Starship Troopers", false, "");
         libraryInventory[19] = new Book(19,"978-0-553-34313-6","Neuromancer", false, "");
         libraryInventory[20] = new Book(20,"978-0-439-02352-8","Dune", false, "");
-    }
-    public void getBook(){
-        for(int i = 1; i < libraryInventory.length; i++) {
-            System.out.println(libraryInventory[i]);
-        }
     }
 
 

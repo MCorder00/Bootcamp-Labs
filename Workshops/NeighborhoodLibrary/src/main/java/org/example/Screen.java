@@ -47,8 +47,8 @@ public class Screen {
                         break;
                 } // runs exception handler method
             } catch (Exception e) {
-                System.out.println("Invalid operation.");
-                checkContinue();
+                System.out.println("Invalid operation. Exiting program.");
+                exitProgram();
             }
         } while (shouldContinue);
     }
@@ -77,8 +77,8 @@ public class Screen {
                     showHomeScreen();
                 }// runs exception handler method
             } catch (Exception e) {
-                System.out.println("Invalid operation.");
-                checkContinue();
+                System.out.println("Invalid operation. Exiting program.");
+                exitProgram();
             }
         } while (shouldContinue);
     }
@@ -108,8 +108,8 @@ public class Screen {
                 }
                 // runs exception handler method and updates to false when necessary
             } catch (Exception e) {
-                System.out.println("Invalid operation.");
-                checkContinue();
+                System.out.println("Invalid operation. Exiting program.");
+                exitProgram();
             }
         } while (shouldContinue);
         }
@@ -118,16 +118,4 @@ public class Screen {
         System.out.println("Thank you for using the library!");
         System.exit(0);
     }
-
-    public boolean checkContinue () {
-        sc.nextLine();
-        System.out.println("Would you like to return to the home screen? (Y)es/(N)o:");
-        char checkChar = sc.next().charAt(0);
-        checkChar = Character.toUpperCase(checkChar);
-        if (checkChar != 'Y') {
-            exitProgram();
-        }
-        return false;
-    }
-
-    }
+}

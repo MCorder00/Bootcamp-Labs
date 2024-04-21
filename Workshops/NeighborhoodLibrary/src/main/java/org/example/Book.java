@@ -136,8 +136,8 @@ public class Book {
                     System.out.println("Invalid operation.");
                 }
             } catch (Exception e) {
-                System.out.println("Invalid operation.");
-                screen.checkContinue();
+                System.out.println("Invalid operation. Exiting program.");
+                screen.exitProgram();
             }
         } while (shouldContinue);
     }
