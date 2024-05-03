@@ -52,4 +52,5 @@ public class    Cart {
     public int getTotalItems() {
         return items.values().stream().mapToInt(Integer::intValue).sum();
     }
+    // s t r e a m s
 }
