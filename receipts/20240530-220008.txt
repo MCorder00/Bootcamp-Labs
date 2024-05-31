@@ -1,0 +1,12 @@
+Order Summary:
+Sandwiches:
+TWELVE_INCH WHITE Sandwich:
+- ONIONS
+- MAYO
+- Toasted
+TWELVE_INCH WHITE Sandwich:
+- LETTUCE
+- MAYO
+Drinks:
+Chips:
+Total Cost: $18.00

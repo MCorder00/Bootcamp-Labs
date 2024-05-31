@@ -1,0 +1,27 @@
+Order Summary:
+Sandwiches:
+TWELVE_INCH WHITE Sandwich:
+- SALAMI
+- ROAST_BEEF
+- AMERICAN
+- PICKLES
+- MUSTARD
+- Toasted
+TWELVE_INCH WHITE Sandwich:
+- SALAMI
+- ROAST_BEEF
+- AMERICAN
+- PICKLES
+- MUSTARD
+- Toasted
+EIGHT_INCH WHITE Sandwich:
+- STEAK
+- AMERICAN
+- PEPPERS
+- MAYO
+- Toasted
+Drinks:
+MEDIUM Cola - $2.50
+Chips:
+CLASSIC Chips - $1.50
+Total Cost: $49.50

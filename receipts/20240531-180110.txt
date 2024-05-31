@@ -1,0 +1,12 @@
+Order Summary:
+Sandwiches:
+EIGHT_INCH WHITE Sandwich:
+- BACON
+- CHEDDAR
+- LETTUCE
+- TOMATOES
+- RANCH
+- Toasted
+Drinks:
+Chips:
+Total Cost: $11.00

@@ -1,0 +1,15 @@
+Order Summary:
+Sandwiches:
+TWELVE_INCH RYE Sandwich:
+- SALAMI (Extra)
+- SALAMI (Extra)
+- AMERICAN
+- PEPPERS
+- MAYO
+- MUSTARD
+- Toasted
+Drinks:
+MEDIUM Super-Cola - $2.50
+Chips:
+CLASSIC Chips - $1.50
+Total Cost: $21.25

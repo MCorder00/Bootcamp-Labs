@@ -1,0 +1,13 @@
+Order Summary:
+Sandwiches:
+EIGHT_INCH WHITE Sandwich:
+- STEAK
+- AMERICAN
+- PEPPERS
+- MAYO
+- Toasted
+Drinks:
+LARGE Cola - $3.00
+Chips:
+BBQ Chips - $1.50
+Total Cost: $15.50
