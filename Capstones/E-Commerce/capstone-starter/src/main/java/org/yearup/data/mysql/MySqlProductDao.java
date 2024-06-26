@@ -25,11 +25,7 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
     {
         List<Product> products = new ArrayList<>();
 
-        String sql = "SELECT * FROM products " +
-                "WHERE (category_id = ? OR ? = -1) " +
-                "   AND (price >= ? OR ? = -1) " +
-                "   AND (price <= ? OR ? = -1) " +
-                "   AND (color = ? OR ? = '') ";
+        String sql = "{CALL SearchProducts(?, ?, ?, ?)}";
 
         categoryId = categoryId == null ? -1 : categoryId;
         minPrice = minPrice == null ? new BigDecimal("-1") : minPrice;
@@ -38,15 +34,12 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
 
         try (Connection connection = getConnection())
         {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            CallableStatement statement = connection.prepareCall(sql);
+
             statement.setInt(1, categoryId);
-            statement.setInt(2, categoryId);
-            statement.setBigDecimal(3, minPrice);
-            statement.setBigDecimal(4, minPrice);
-            statement.setBigDecimal(5, maxPrice);
-            statement.setBigDecimal(6, maxPrice);
-            statement.setString(7, color);
-            statement.setString(8, color);
+            statement.setBigDecimal(2, minPrice);
+            statement.setBigDecimal(3, maxPrice);
+            statement.setString(4, color);
 
             ResultSet row = statement.executeQuery();
 
@@ -69,12 +62,12 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
     {
         List<Product> products = new ArrayList<>();
 
-        String sql = "SELECT * FROM products " +
-                    " WHERE category_id = ? ";
+        String sql = "{CALL GetProductsByCategoryId(?)}";
 
         try (Connection connection = getConnection())
         {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            CallableStatement statement = connection.prepareCall(sql);
+
             statement.setInt(1, categoryId);
 
             ResultSet row = statement.executeQuery();
@@ -97,10 +90,10 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
     @Override
     public Product getById(int productId)
     {
-        String sql = "SELECT * FROM products WHERE product_id = ?";
+        String sql = "{CALL GetProductsByProductId(?)}";
         try (Connection connection = getConnection())
         {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            CallableStatement statement = connection.prepareCall(sql);
             statement.setInt(1, productId);
 
             ResultSet row = statement.executeQuery();
@@ -121,12 +114,11 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
     public Product create(Product product)
     {
 
-        String sql = "INSERT INTO products(name, price, category_id, description, color, stock, image_url, featured) " +
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        String sql = "{CALL CreateProduct(?, ?, ?, ?, ?, ?, ?, ?)}";
 
         try (Connection connection = getConnection())
         {
-            PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            CallableStatement statement = connection.prepareCall(sql);
             statement.setString(1, product.getName());
             statement.setBigDecimal(2, product.getPrice());
             statement.setInt(3, product.getCategoryId());
@@ -161,20 +153,11 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
     @Override
     public void update(int productId, Product product)
     {
-        String sql = "UPDATE products" +
-                " SET name = ? " +
-                "   , price = ? " +
-                "   , category_id = ? " +
-                "   , description = ? " +
-                "   , color = ? " +
-                "   , stock = ? " +
-                "   , image_url = ? " +
-                "   , featured = ? " +
-                " WHERE product_id = ?;";
+        String sql = "{CALL UpdateProduct(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 
         try (Connection connection = getConnection())
         {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            CallableStatement statement = connection.prepareCall(sql);
             statement.setString(1, product.getName());
             statement.setBigDecimal(2, product.getPrice());
             statement.setInt(3, product.getCategoryId());
@@ -197,12 +180,11 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
     public void delete(int productId)
     {
 
-        String sql = "DELETE FROM products " +
-                " WHERE product_id = ?;";
+        String sql = "{CALL DeleteProduct(?)}";
 
         try (Connection connection = getConnection())
         {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            CallableStatement statement = connection.prepareCall(sql);
             statement.setInt(1, productId);
 
             statement.executeUpdate();
